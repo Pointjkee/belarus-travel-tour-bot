@@ -1,7 +1,7 @@
 import express from 'express';
-// import { Bot } from './bot';
+import { Bot } from './bot';
 import { port } from './config/config';
-// import { ConfigService } from './config/config,service';
+import { ConfigService } from './config/config,service';
 
 export async function startApp() {
   const app = express();
@@ -13,6 +13,6 @@ export async function startApp() {
     console.log(`Example app listening on port ${port}`);
   });
 
-  // const bot = new Bot(new ConfigService());
-  // await bot.init();
+  const bot = new Bot(new ConfigService());
+  await bot.init();
 }
