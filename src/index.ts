@@ -2,10 +2,10 @@ import {Telegraf} from "telegraf";
 import axios from 'axios'
 import {config} from 'dotenv'
 import express from 'express'
+import {port} from "./config";
 
 config()
 const app = express()
-const port = 3000;
 app.get('/',(req,res)=>{
     res.send('Test log')
 })

@@ -1,1 +1,1 @@
-export const token = '7138941711:AAEnRmt2AvKEUApKYkgrAoCQ_HgB4InV1B0'
+export const port = process.env.PORT || 5000;
