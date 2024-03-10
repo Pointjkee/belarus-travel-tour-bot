@@ -3,7 +3,7 @@ import { Bot } from './bot';
 import { port } from './config/config';
 import { ConfigService } from './config/config,service';
 
-export const startApp = async () => {
+export async function startApp() {
   const app = express();
   app.get('/', (req, res) => {
     res.send('Test log');
@@ -15,4 +15,4 @@ export const startApp = async () => {
 
   const bot = new Bot(new ConfigService());
   await bot.init();
-};
+}
