@@ -24,6 +24,5 @@ export class StartCommand extends Command {
         },
       }),
     );
-
   }
 }

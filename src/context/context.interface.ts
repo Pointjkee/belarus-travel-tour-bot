@@ -1,9 +1,11 @@
-import { Context } from 'telegraf';
+import { Scenes } from 'telegraf';
 
 export interface ISessionData {
-    testFlag: boolean;
+  testFlag: boolean;
 }
 
-export interface IBotContext extends Context {
+export interface MySceneSession extends Scenes.SceneSessionData {
   session: ISessionData;
 }
+
+export type IBotContext = Scenes.SceneContext<MySceneSession>;

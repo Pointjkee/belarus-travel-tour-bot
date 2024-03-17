@@ -1,5 +1,6 @@
 import { Telegraf } from 'telegraf';
 import { IBotContext } from '../context/context.interface';
+import { Scenes } from '../scenes/config';
 import { Buttons } from './buttons';
 import { Command } from './command.class';
 
@@ -10,9 +11,7 @@ export class SearchCommand extends Command {
 
   public handle(): void {
     this.bot.hears(Buttons.SEARCH, (ctx) => {
-      ctx.reply('Введи страну отдыха');
+      ctx.scene.enter(Scenes.COUNTRY);
     });
-
-
   }
 }
