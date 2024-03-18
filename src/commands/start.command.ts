@@ -13,12 +13,8 @@ export class StartCommand extends Command {
       ctx.reply('Привет! Выбери нужное из меню', {
         reply_markup: {
           keyboard: [
-            [
-              { text: Buttons.SEARCH },
-              { text: Buttons.FUN },
-              { text: Buttons.CALL },
-              { text: Buttons.SETTING },
-            ],
+            [{ text: Buttons.SEARCH }, { text: Buttons.FUN }],
+            [{ text: Buttons.CALL }, { text: Buttons.SETTING }],
           ],
           resize_keyboard: true,
         },

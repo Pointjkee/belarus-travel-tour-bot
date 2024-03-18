@@ -58,7 +58,7 @@ export class CountryScene extends Scenes.BaseScene<IBotContext> {
 
     await ctx.reply('Введи название страны', {
       ...Markup.inlineKeyboard(countryNameList, {
-        columns: 4,
+        columns: 2,
       }),
     });
   }
