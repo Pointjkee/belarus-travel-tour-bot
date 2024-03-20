@@ -1,5 +1,6 @@
 import { CallbackQuery, Message, Update } from '@telegraf/types';
 import { Context, Markup, NarrowedContext, Scenes } from 'telegraf';
+import {Scenes as ScenesName} from '../scenes/config'
 import { IBotContext } from '../context/context.interface';
 import { Network } from '../network/network';
 import CallbackQueryUpdate = Update.CallbackQueryUpdate;
@@ -13,7 +14,7 @@ export interface ICountry {
 // "cityId": 786
 // "name": "Москва",
 //   "cityId": 345
-export class CountryScene extends Scenes.BaseScene<IBotContext> {
+export class CountryToScene extends Scenes.BaseScene<IBotContext> {
   private countryList: ICountry[] = [
     { name: 'Египет', countryId: 5732 },
     { name: 'Турция', countryId: 1104 },
@@ -48,7 +49,8 @@ export class CountryScene extends Scenes.BaseScene<IBotContext> {
     });
     const countryId = this.countryList.find((item) => item.countryId === country)?.countryId;
     countryId && this.network.setCountryId(countryId);
-    return ctx.scene.leave();
+    await ctx.scene.leave();
+    await ctx.scene.enter(ScenesName.CITY);
   }
 
   private async onEnter(ctx: Context<Update>): Promise<void> {

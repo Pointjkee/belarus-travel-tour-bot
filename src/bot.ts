@@ -5,9 +5,12 @@ import { SearchCommand } from './commands/search.command';
 import { StartCommand } from './commands/start.command';
 import { IConfigService } from './config/config.interface';
 import { IBotContext } from './context/context.interface';
+import { Network } from './network/network';
+import { CityFromScene } from './scenes/cityFrom';
 import { Scenes as ScenesName } from './scenes/config';
-import { CountryScene } from './scenes/country';
-import { Network } from "./network/network";
+import { CountryToScene } from './scenes/countryTo';
+import { CurrencyScene } from "./scenes/currency";
+import { DateScene } from "./scenes/date";
 
 export class Bot {
   public bot: Telegraf<IBotContext>;
@@ -27,8 +30,13 @@ export class Bot {
     await this.bot.launch();
   }
 
-  private initScenes() {
-    const stage = new Scenes.Stage<IBotContext>([new CountryScene(ScenesName.COUNTRY, this.network)]);
+  private initScenes(): void {
+    const stage = new Scenes.Stage<IBotContext>([
+      new CountryToScene(ScenesName.COUNTRY, this.network),
+      new CityFromScene(ScenesName.CITY, this.network),
+      new CurrencyScene(ScenesName.CURRENCY, this.network),
+      new DateScene(ScenesName.CALENDAR, this.network),
+    ]);
 
     // this.bot.use(session());
     this.bot.use(stage.middleware());
