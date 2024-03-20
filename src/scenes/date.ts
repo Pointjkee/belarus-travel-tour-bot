@@ -2,8 +2,8 @@ import { CallbackQuery, Update } from '@telegraf/types';
 import { Context, Scenes } from 'telegraf';
 import { IBotContext } from '../context/context.interface';
 import { Network } from '../network/network';
+import { Scenes as ScenesName } from './config';
 import CallbackQueryUpdate = Update.CallbackQueryUpdate;
-import { Scenes as ScenesName } from "./config";
 
 interface IBaseOptions {
   weekDayNames: string[];
@@ -30,6 +30,15 @@ export interface ICallbackButton {
   callback_data: string;
 }
 
+enum DataType {
+  CALENDAR = 'calendar',
+}
+
+enum CalendarActions {
+  NEXT_MONTH = 'next-month',
+  PREV_MONTH = 'prev-month',
+}
+
 export class DateScene extends Scenes.BaseScene<IBotContext> {
   private options: ICalendarOptions;
   private static WeekLength = 7;
@@ -41,22 +50,6 @@ export class DateScene extends Scenes.BaseScene<IBotContext> {
   constructor(id: string, public network: Network) {
     super(id);
     this.enter(this.onEnter.bind(this));
-
-    this.on('callback_query', (ctx) => {
-      // @ts-ignore
-      const data = JSON.parse(ctx.update.callback_query.data) as {
-        type: string;
-        date: string;
-        action: string | null;
-      };
-      if (!data.action && data.date) {
-        this.onAction(ctx, data.date);
-      } else if (data.action === 'next-month') {
-        this.nextMonth(ctx);
-      } else if (data.action === 'prev-month') {
-        this.prevMonth(ctx);
-      }
-    });
 
     //setting
     const defaultWeekDayNames = [
@@ -87,7 +80,7 @@ export class DateScene extends Scenes.BaseScene<IBotContext> {
       minDate: this.sanitizeMinMaxDate('01.04.2024'),
       maxDate: this.sanitizeMinMaxDate('19.12.2024'),
       averageYears: 14,
-      callbackDataType: 'calendar',
+      callbackDataType: DataType.CALENDAR,
       ignoreButtonValue: 0,
       yearsInLine: 7,
       startFromSunday: false,
@@ -103,10 +96,10 @@ export class DateScene extends Scenes.BaseScene<IBotContext> {
     date: string,
   ): Promise<void> {
     if (!this.fromDate) {
-      this.fromDate = date.replaceAll('-','.');
-      await ctx.reply(`Заезд с ${this.fromDate }`);
+      this.fromDate = date.replaceAll('-', '.');
+      await ctx.reply(`Заезд с ${this.fromDate}`);
     } else {
-      this.toDate = date.replace('-','.');
+      this.toDate = date.replace('-', '.');
       await ctx.reply(`Заезд с ${this.fromDate} по ${this.toDate}`);
       this.network.setDate(this.fromDate, this.toDate);
       this.fromDate = this.toDate = null;
@@ -116,6 +109,25 @@ export class DateScene extends Scenes.BaseScene<IBotContext> {
   }
 
   private async onEnter(ctx: Context<Update>): Promise<void> {
+    this.on('callback_query', (ctx) => {
+      // @ts-ignore
+      const data = JSON.parse(ctx.update.callback_query.data) as {
+        type: DataType;
+        date: string;
+        action: string | null;
+      };
+
+      if (data.type !== DataType.CALENDAR) return;
+
+      if (!data.action && data.date) {
+        this.onAction(ctx, data.date);
+      } else if (data.action === CalendarActions.NEXT_MONTH) {
+        this.nextMonth(ctx);
+      } else if (data.action === CalendarActions.PREV_MONTH) {
+        this.prevMonth(ctx);
+      }
+    });
+
     await ctx.reply('Выбери дату', {
       parse_mode: 'HTML',
       reply_markup: {
@@ -185,13 +197,13 @@ export class DateScene extends Scenes.BaseScene<IBotContext> {
 
     this.isInMinMonth(date)
       ? header.push(this.createCallbackButton(' '))
-      : header.push(this.createCallbackButton('<', currentDate, 'prev-month'));
+      : header.push(this.createCallbackButton('<', currentDate, CalendarActions.PREV_MONTH));
 
     header.push(this.createCallbackButton(monthYear, currentDate, 'select-year'));
 
     this.isInMaxMonth(date)
       ? header.push(this.createCallbackButton(' '))
-      : header.push(this.createCallbackButton('>', currentDate, 'next-month'));
+      : header.push(this.createCallbackButton('>', currentDate, CalendarActions.NEXT_MONTH));
 
     result.push(header);
     result.push(this.options.weekDayNames.map((day) => this.createCallbackButton(day)));
