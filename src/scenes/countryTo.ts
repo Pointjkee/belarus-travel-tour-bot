@@ -1,8 +1,8 @@
 import { CallbackQuery, Message, Update } from '@telegraf/types';
 import { Context, Markup, NarrowedContext, Scenes } from 'telegraf';
-import {Scenes as ScenesName} from '../scenes/config'
 import { IBotContext } from '../context/context.interface';
 import { Network } from '../network/network';
+import { Scenes as ScenesName } from '../scenes/config';
 import CallbackQueryUpdate = Update.CallbackQueryUpdate;
 
 export interface ICountry {
@@ -54,6 +54,8 @@ export class CountryToScene extends Scenes.BaseScene<IBotContext> {
   }
 
   private async onEnter(ctx: Context<Update>): Promise<void> {
+    this.network.clear();
+
     const countryNameList = this.countryList.map((item) => {
       return Markup.button.callback(item.name, item.name);
     });

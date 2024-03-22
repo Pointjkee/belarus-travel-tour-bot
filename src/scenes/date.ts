@@ -104,7 +104,7 @@ export class DateScene extends Scenes.BaseScene<IBotContext> {
       this.network.setDate(this.fromDate, this.toDate);
       this.fromDate = this.toDate = null;
       await ctx.scene.leave();
-      await ctx.scene.enter(ScenesName.CURRENCY);
+      await ctx.scene.enter(ScenesName.NIGHTS);
     }
   }
 

@@ -10,8 +10,9 @@ export class Network {
 
   private currencyId = 5561; // id валюты, в которой указана цена;
 
-  nightsMin = 7; //минимальное количество ночей, проведенных в отеле;
-  nightsMax = 15; // максимальное количество ночей, проведенных в отеле;
+  public nightsMin: null | number = null; //минимальное количество ночей, проведенных в отеле;
+  public nightsMax: null | number = null; // максимальное количество ночей, проведенных в отеле;
+
   hotelClassId = 2569; // id уровня отеля(звездность);
   accommodationId = 2; //– id размещения;
   rAndBId = 2424; // id пансиона;
@@ -35,5 +36,18 @@ export class Network {
   public setDate(before: string, after: string): void {
     this.before = before;
     this.after = after;
+  }
+
+  public setMinNights(value: number): void {
+    this.nightsMin = value;
+  }
+
+  public setMaxNights(value: number): void {
+    this.nightsMax = value;
+  }
+
+  public clear(): void {
+    this.nightsMin = null;
+    this.nightsMax = null;
   }
 }
