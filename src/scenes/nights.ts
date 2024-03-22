@@ -42,7 +42,7 @@ export class NightsScene extends Scenes.BaseScene<IBotContext> {
         }),
       });
     } else if (!this.network.nightsMax) {
-      await ctx.reply(`Минимальное кол-во ночей: <b>${nights}</b>`, {
+      await ctx.reply(`Максимальное кол-во ночей: <b>${nights}</b>`, {
         parse_mode: 'HTML',
       });
       this.network.setMaxNights(nights);
