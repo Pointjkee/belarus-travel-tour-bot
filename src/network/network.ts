@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export class Network {
   private countryId: number = 0; // id страны отдыха;
   private cityId: number = 345; // id города вылета
@@ -13,9 +15,10 @@ export class Network {
   public nightsMin: null | number = null; //минимальное количество ночей, проведенных в отеле;
   public nightsMax: null | number = null; // максимальное количество ночей, проведенных в отеле;
 
-  hotelClassId = 2569; // id уровня отеля(звездность);
-  accommodationId = 2; //– id размещения;
-  rAndBId = 2424; // id пансиона;
+  private hotelClassId = 2569; // id уровня отеля(звездность);
+  private hotelClassBetter = true;
+  private accommodationId = 2; //– id размещения;
+  private rAndBId = 2424; // id пансиона;
 
   public setCountryId(value: number): void {
     this.countryId = value;
@@ -44,6 +47,24 @@ export class Network {
 
   public setMaxNights(value: number): void {
     this.nightsMax = value;
+  }
+
+  public setHotelClassId(value: number): void {
+    this.hotelClassId = value;
+  }
+
+  public setRAndBId(value: number): void {
+    this.rAndBId = value;
+  }
+
+  public async sendRequest() {
+    axios({
+      method: 'get',
+      url: 'http://search.tez-tour.com/tariffsearch/getResult?accommodationId=1&after=20.05.2024&before=29.05.2024&cityId=345&adults=2&children=1&countryId=1104&nightsMin=8&nightsMax=12&currency=5561&priceMin=0&priceMax=120000&hotelClassId=2567&hotelClassBetter=true&rAndBId=2424&rAndBBetter=true',
+    })
+      .then( (response) => {
+      //response.data.data = []...
+      })
   }
 
   public clear(): void {

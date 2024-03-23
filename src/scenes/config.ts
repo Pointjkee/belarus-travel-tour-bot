@@ -4,4 +4,6 @@ export enum Scenes {
   CURRENCY = 'currency',
   CALENDAR = 'calendar',
   NIGHTS = 'nights',
+  HOTEL = 'hotel',
+  FOOD = 'food',
 }

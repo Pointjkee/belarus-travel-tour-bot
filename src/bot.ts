@@ -12,6 +12,8 @@ import { CountryToScene } from './scenes/countryTo';
 import { CurrencyScene } from "./scenes/currency";
 import { DateScene } from "./scenes/date";
 import { NightsScene } from "./scenes/nights";
+import { HotelClassesScene } from "./scenes/hotelClasses";
+import { FoodTypeScene } from "./scenes/foodType";
 
 export class Bot {
   public bot: Telegraf<IBotContext>;
@@ -38,6 +40,8 @@ export class Bot {
       new CurrencyScene(ScenesName.CURRENCY, this.network),
       new DateScene(ScenesName.CALENDAR, this.network),
       new NightsScene(ScenesName.NIGHTS, this.network),
+      new HotelClassesScene(ScenesName.HOTEL, this.network),
+      new FoodTypeScene(ScenesName.FOOD, this.network),
     ]);
 
     // this.bot.use(session());

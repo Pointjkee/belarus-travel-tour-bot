@@ -47,7 +47,7 @@ export class NightsScene extends Scenes.BaseScene<IBotContext> {
       });
       this.network.setMaxNights(nights);
       await ctx.scene.leave();
-      await ctx.scene.enter(ScenesName.NIGHTS);
+      await ctx.scene.enter(ScenesName.HOTEL);
     }
   }
 
