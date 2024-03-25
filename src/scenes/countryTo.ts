@@ -47,7 +47,7 @@ export class CountryToScene extends Scenes.BaseScene<IBotContext> {
     await ctx.reply(`Страна путешействия: <b>${country}</b>`, {
       parse_mode: 'HTML',
     });
-    const countryId = this.countryList.find((item) => item.countryId === country)?.countryId;
+    const countryId = this.countryList.find((item) => item.name === country)?.countryId;
     countryId && this.network.setCountryId(countryId);
     await ctx.scene.leave();
     await ctx.scene.enter(ScenesName.CITY);

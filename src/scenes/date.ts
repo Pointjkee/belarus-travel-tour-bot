@@ -96,16 +96,30 @@ export class DateScene extends Scenes.BaseScene<IBotContext> {
     date: string,
   ): Promise<void> {
     if (!this.fromDate) {
-      this.fromDate = date.replaceAll('-', '.');
+      this.fromDate = date;
       await ctx.reply(`Заезд с ${this.fromDate}`);
     } else {
-      this.toDate = date.replace('-', '.');
+      this.toDate = date;
       await ctx.reply(`Заезд с ${this.fromDate} по ${this.toDate}`);
-      this.network.setDate(this.fromDate, this.toDate);
+      this.network.setDate(this.formatDate(this.fromDate), this.formatDate(this.toDate));
       this.fromDate = this.toDate = null;
       await ctx.scene.leave();
       await ctx.scene.enter(ScenesName.NIGHTS);
     }
+  }
+
+  private formatDate(date: string): string {
+    const [year, month, day] = date.split('-');
+    const dateObj = new Date(Number(year), Number(month) - 1, Number(day));
+
+    // Получаем отформатированную дату в формате "dd/mm/yyyy"
+    const formattedDate = dateObj.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+
+    return formattedDate.replaceAll('/', '.');
   }
 
   private async onEnter(ctx: Context<Update>): Promise<void> {

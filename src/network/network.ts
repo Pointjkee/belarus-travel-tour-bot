@@ -1,6 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 
 export class Network {
+  private url: string = 'http://search.tez-tour.com';
   private countryId: number = 0; // id страны отдыха;
   private cityId: number = 345; // id города вылета
 
@@ -19,6 +20,7 @@ export class Network {
   private hotelClassBetter = true;
   private accommodationId = 2; //– id размещения;
   private rAndBId = 2424; // id пансиона;
+  private rAndBBetter = true;
 
   public setCountryId(value: number): void {
     this.countryId = value;
@@ -36,7 +38,7 @@ export class Network {
     this.priceMax = value;
   }
 
-  public setDate(before: string, after: string): void {
+  public setDate(after: string, before: string): void {
     this.before = before;
     this.after = after;
   }
@@ -57,14 +59,13 @@ export class Network {
     this.rAndBId = value;
   }
 
-  public async sendRequest() {
-    axios({
+  public async getHotelsListRequest(): Promise<void> {
+    await axios({
       method: 'get',
-      url: 'http://search.tez-tour.com/tariffsearch/getResult?accommodationId=1&after=20.05.2024&before=29.05.2024&cityId=345&adults=2&children=1&countryId=1104&nightsMin=8&nightsMax=12&currency=5561&priceMin=0&priceMax=120000&hotelClassId=2567&hotelClassBetter=true&rAndBId=2424&rAndBBetter=true',
+      url: `${this.url}/tariffsearch/getResult?accommodationId=${this.accommodationId}&after=${this.after}&before=${this.before}&cityId=${this.cityId}&countryId=${this.countryId}&nightsMin=${this.nightsMin}&nightsMax=${this.nightsMax}&currency=${this.currencyId}&priceMin=${this.priceMin}&priceMax=${this.priceMax}&hotelClassId=${this.hotelClassId}&hotelClassBetter=${this.hotelClassBetter}&rAndBId=${this.rAndBId}&rAndBBetter=${this.rAndBBetter}`,
     })
-      .then( (response) => {
-      //response.data.data = []...
-      })
+      .then((response: IResponse) => {})
+      .catch((error) => {});
   }
 
   public clear(): void {
@@ -72,3 +73,26 @@ export class Network {
     this.nightsMax = null;
   }
 }
+
+export interface IResponse {
+  status: number;
+  statusText: string;
+  data: {
+    success: boolean;
+    message: string;
+    serverName: string;
+    departureCityId: number;
+    arrivalCountryId: number;
+    data: object[];
+  };
+}
+
+//data[0] - отель
+//data[0][0] - "13.06.2024"
+//data[0][5][4] - "Анталия"
+//data[0][6][0] - ссылка https://www.tez-tour.com/hotel.html?id=326222
+//data[0][6][1] - название отеля "SELGE HOTEL 3 *"
+//data[0][6][2] - фото  "https://s.tez-tour.com/hotel/50003736/DSC_1088_8707_small.JPG"
+//data[0][7][1] - только завтраки
+//data[0][10]["currency"] - валюта $
+//data[0][10]["total"] - 450

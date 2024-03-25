@@ -2,7 +2,6 @@ import { CallbackQuery, Update } from '@telegraf/types';
 import { Context, Markup, Scenes } from 'telegraf';
 import { IBotContext } from '../context/context.interface';
 import { Network } from '../network/network';
-import { Scenes as ScenesName } from './config';
 import CallbackQueryUpdate = Update.CallbackQueryUpdate;
 
 interface IFoodType {
@@ -42,7 +41,7 @@ export class FoodTypeScene extends Scenes.BaseScene<IBotContext> {
     rAndBId && this.network.setRAndBId(rAndBId);
     await ctx.scene.leave();
     //todo доработать
-    await this.network.sendRequest()
+    await this.network.getHotelsListRequest();
   }
 
   private async onEnter(ctx: Context<Update>): Promise<void> {

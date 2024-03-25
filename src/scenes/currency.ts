@@ -71,7 +71,7 @@ export class CurrencyScene extends Scenes.BaseScene<IBotContext> {
       parse_mode: 'HTML',
     });
     this.currency = currency;
-    const currencyId = this.currencyList.find((item) => item.currencyId === currency)?.currencyId;
+    const currencyId = this.currencyList.find((item) => item.name === currency)?.currencyId;
     currencyId && this.network.setCurrencyId(currencyId);
 
     const maxPriceNameList = this.maxPriceList.map((item) => {
