@@ -576,7 +576,7 @@ export class Network {
       date: item[0],
       foodType: item[7][1],
       link: item[6][0],
-      price: `${item[10]['total']} ${item[10]['currency']}`,
+      price: `${Math.ceil(item[10]['total'])} ${item[10]['currency']}`,
       photo: item[6][2],
       name: item[6][1],
       id,
