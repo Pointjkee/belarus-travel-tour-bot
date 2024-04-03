@@ -14,6 +14,7 @@ import { DateScene } from "./scenes/date";
 import { NightsScene } from "./scenes/nights";
 import { HotelClassesScene } from "./scenes/hotelClasses";
 import { FoodTypeScene } from "./scenes/foodType";
+import { HotelSelectionScene } from "./scenes/hotelSelection";
 
 export class Bot {
   public bot: Telegraf<IBotContext>;
@@ -42,6 +43,7 @@ export class Bot {
       new NightsScene(ScenesName.NIGHTS, this.network),
       new HotelClassesScene(ScenesName.HOTEL, this.network),
       new FoodTypeScene(ScenesName.FOOD, this.network),
+      new HotelSelectionScene(ScenesName.HOTEL_SELECTION, this.network),
     ]);
 
     // this.bot.use(session());
