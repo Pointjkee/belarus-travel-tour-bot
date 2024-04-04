@@ -5,26 +5,29 @@ import { SearchCommand } from './commands/search.command';
 import { StartCommand } from './commands/start.command';
 import { IConfigService } from './config/config.interface';
 import { IBotContext } from './context/context.interface';
+import { Database } from './database/database';
 import { Network } from './network/network';
 import { CityFromScene } from './scenes/cityFrom';
 import { Scenes as ScenesName } from './scenes/config';
 import { CountryToScene } from './scenes/countryTo';
-import { CurrencyScene } from "./scenes/currency";
-import { DateScene } from "./scenes/date";
-import { NightsScene } from "./scenes/nights";
-import { HotelClassesScene } from "./scenes/hotelClasses";
-import { FoodTypeScene } from "./scenes/foodType";
-import { HotelSelectionScene } from "./scenes/hotelSelection";
+import { CurrencyScene } from './scenes/currency';
+import { DateScene } from './scenes/date';
+import { FoodTypeScene } from './scenes/foodType';
+import { HotelClassesScene } from './scenes/hotelClasses';
+import { HotelSelectionScene } from './scenes/hotelSelection';
+import { NightsScene } from './scenes/nights';
 
 export class Bot {
   public bot: Telegraf<IBotContext>;
   public commands: Command[] = [];
   private network: Network;
+  private database: Database;
 
   constructor(private readonly configService: IConfigService) {
     this.bot = new Telegraf<IBotContext>(this.configService.get('TELEGRAM_API_TOKEN'));
     this.bot.use(new LocalSession({ database: 'sessions.json' }).middleware());
     this.network = new Network();
+    this.database = new Database();
   }
 
   public async init(): Promise<void> {
