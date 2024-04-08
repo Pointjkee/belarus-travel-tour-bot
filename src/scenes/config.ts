@@ -7,4 +7,5 @@ export enum Scenes {
   HOTEL = 'hotel',
   FOOD = 'food',
   HOTEL_SELECTION = 'hotel_selection',
+  HOTEL_FAVORITES = 'hotel_favorites',
 }

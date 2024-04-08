@@ -2,11 +2,6 @@ import { createClient } from '@supabase/supabase-js';
 import { HotelType } from '../network/network';
 import { IDatabase, Tables } from './database.types';
 
-type HotelData = {
-  id: string;
-  data: string;
-};
-
 export class Database {
   public supabase: any;
 
@@ -26,7 +21,7 @@ export class Database {
       .from('hotels')
       .select(`*`)
       .eq('id', id);
-    const hotels = data?.map((item: HotelData) => {
+    const hotels = data?.map((item: ResponseHotel) => {
       return JSON.parse(item.data);
     });
 

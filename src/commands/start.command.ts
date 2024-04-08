@@ -14,7 +14,7 @@ export class StartCommand extends Command {
         reply_markup: {
           keyboard: [
             [{ text: Buttons.SEARCH }, { text: Buttons.FAVORITES }],
-            [{ text: Buttons.CALL }, { text: Buttons.SETTING }],
+            // [{ text: Buttons.CALL }, { text: Buttons.SETTING }],
           ],
           resize_keyboard: true,
         },

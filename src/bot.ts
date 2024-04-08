@@ -17,6 +17,7 @@ import { HotelClassesScene } from './scenes/hotelClasses';
 import { HotelSelectionScene } from './scenes/hotelSelection';
 import { NightsScene } from './scenes/nights';
 import { FavoritesCommand } from "./commands/favorites.command";
+import { HotelFavoritesScene } from "./scenes/hotelFavorites";
 
 export class Bot extends Telegraf<IBotContext>{
   public commands: Command[] = [];
@@ -47,6 +48,7 @@ export class Bot extends Telegraf<IBotContext>{
       new HotelClassesScene(ScenesName.HOTEL, this.network),
       new FoodTypeScene(ScenesName.FOOD, this.network),
       new HotelSelectionScene(ScenesName.HOTEL_SELECTION, this.network, this.database),
+      new HotelFavoritesScene(ScenesName.HOTEL_FAVORITES, this.network, this.database),
     ]);
 
     // this.bot.use(session());
