@@ -1,5 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
+import { HotelType } from '../network/network';
 import { IDatabase, Tables } from './database.types';
+
+type HotelData = {
+  id: string;
+  data: string;
+};
 
 export class Database {
   public supabase: any;
@@ -15,13 +21,20 @@ export class Database {
     );
   }
 
-  public async getAllSavedHotelsData(): Promise<ResponseHotel[]> {
-    let { data: hotels, error } = await this.supabase.from('hotels').select('*');
-    return hotels as ResponseHotel[];
+  public async getAllSavedHotels(id: string): Promise<HotelType[] | null> {
+    const { data: data }: { data: ResponseHotel[] } = await this.supabase
+      .from('hotels')
+      .select(`*`)
+      .eq('id', id);
+    const hotels = data?.map((item: HotelData) => {
+      return JSON.parse(item.data);
+    });
+
+    return !hotels.length ? null : hotels;
   }
 
-  public async setData(id: string, data: string) {
-    const { error } = await this.supabase
+  public async saveHotel(id: string, data: string) {
+    await this.supabase
       .from('hotels')
       .insert([
         {

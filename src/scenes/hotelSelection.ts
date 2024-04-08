@@ -1,6 +1,7 @@
 import { CallbackQuery, Update } from '@telegraf/types';
 import { Context, Markup, Scenes } from 'telegraf';
 import { IBotContext } from '../context/context.interface';
+import { Database } from '../database/database';
 import { Network } from '../network/network';
 import { ICallbackButton } from './date';
 import CallbackQueryUpdate = Update.CallbackQueryUpdate;
@@ -12,13 +13,13 @@ enum DataType {
 enum HotelActions {
   NEXT_HOTEL = 'next-hotel',
   PREV_HOTEL = 'prev-hotel',
-  ON_LINK = 'on-link',
+  SAVE = 'save',
 }
 
 export class HotelSelectionScene extends Scenes.BaseScene<IBotContext> {
   private currentId: number = 0;
 
-  constructor(id: string, public network: Network) {
+  constructor(id: string, public network: Network, public database: Database) {
     super(id);
     this.enter(this.onEnter.bind(this));
   }
@@ -44,6 +45,11 @@ export class HotelSelectionScene extends Scenes.BaseScene<IBotContext> {
         this.nextHotel(ctx);
       } else if (data.action === HotelActions.PREV_HOTEL) {
         this.prevHotel(ctx);
+      } else if (data.action === HotelActions.SAVE) {
+        this.database.saveHotel(
+          `${ctx.update.callback_query.from.id}`,
+          JSON.stringify(this.network.hotels[+data.date]),
+        );
       }
     });
 
@@ -109,6 +115,7 @@ export class HotelSelectionScene extends Scenes.BaseScene<IBotContext> {
       [this.createCallbackButton(`Город: ${hotel.city}`, '', '')],
       [this.createCallbackButton(`Дата вылета: ${hotel.date}`, '', '')],
       [this.createCallbackButton(`Цена на 1 чел.: ${hotel.price}`, '', '')],
+      [this.createCallbackButton(`Сохранить в закладки`, id.toString(), HotelActions.SAVE)],
       [...footer],
     ];
   }
