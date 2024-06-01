@@ -25,7 +25,7 @@ export class Database {
       return JSON.parse(item.data);
     });
 
-    return !hotels.length ? null : hotels;
+    return !hotels?.length ? null : hotels;
   }
 
   public async saveHotel(id: string, data: string) {
