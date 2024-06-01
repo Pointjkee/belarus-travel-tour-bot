@@ -1,4 +1,5 @@
 name: Build Image
+on:
   push:
     branches: ["master"]
 env:
