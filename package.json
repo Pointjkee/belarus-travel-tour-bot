@@ -1,6 +1,6 @@
 {
   "name": "telegram_bot",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Telegram bot for searching tour",
   "main": "index.ts",
   "scripts": {
