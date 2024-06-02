@@ -1,6 +1,6 @@
-import { createClient, SupabaseClient, PostgrestResponse } from '@supabase/supabase-js';
-import { HotelType } from '../network/network';
-import { IDatabase, Tables } from './database.types';
+import { createClient, SupabaseClient, PostgrestResponse } from "@supabase/supabase-js";
+import { HotelType } from "../network/network";
+import { IDatabase, Tables } from "./database.types";
 
 export class Database {
   public supabase: SupabaseClient<IDatabase>;
@@ -8,7 +8,7 @@ export class Database {
   constructor() {
     this.supabase = createClient<IDatabase>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     );
   }
 
@@ -18,13 +18,13 @@ export class Database {
 
   public async getAllSavedHotels(id: string): Promise<HotelType[] | null> {
     const response: PostgrestResponse<ResponseHotel> = await this.supabase
-      .from('hotels')
-      .select('*')
-      .eq('id', id);
+      .from("hotels")
+      .select("*")
+      .eq("id", id);
 
 
     if (response.error) {
-      console.error('Ошибка при запросе данных:', response.error);
+      console.error("Ошибка при запросе данных:", response.error);
       return null;
     }
 
@@ -37,15 +37,15 @@ export class Database {
 
   public async saveHotel(id: string, data: string) {
     await this.supabase
-      .from('hotels')
+      .from("hotels")
       .insert([
         {
           id,
-          data,
-        },
+          data
+        }
       ])
       .select();
   }
 }
 
-export type ResponseHotel = Tables<'hotels'>;
+export type ResponseHotel = Tables<"hotels">;
