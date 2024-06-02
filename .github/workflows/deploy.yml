@@ -19,7 +19,13 @@ jobs:
         if: success()  # Выполняется только если все предыдущие шаги были успешны
         run: |
           git config --global user.name 'pointjkee'
+          git config user.email "<>"
           git fetch origin master
+          git pull origin master
           git checkout master
+          git add .
           git merge --allow-unrelated-histories origin/develop
-          git push origin master
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git commit -m "chore (automated): update"
+            git push origin main
+          fi
