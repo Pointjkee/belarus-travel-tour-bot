@@ -3,7 +3,7 @@ on:
   push:
     branches: [ develop ]
 jobs:
-  first-job:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -12,7 +12,8 @@ jobs:
           node-version: '20'
       - run: npm install
       - run: npm run build
-      - run: npm run test
+      - run: git checkout -- package-lock.json
+      - run: npm run lint
 
         if: success()  # Выполняется только если все предыдущие шаги были успешны
       - name: Set Git config

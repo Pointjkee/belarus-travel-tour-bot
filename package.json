@@ -10,7 +10,7 @@
     "watch": "tsc -w",
     "dev": "nodemon src/index.ts",
     "gen-types": "npx supabase gen types typescript > src/database/database.types.ts",
-    "test": "node -e \"console.log('Сборка проекта...');\""
+    "lint": "eslint . --max-warnings=20 --fix"
   },
   "author": "Tsarik D.",
   "license": "ISC",

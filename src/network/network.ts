@@ -567,16 +567,16 @@ export class Network {
           this.parseHotelResponse(item, index),
         );
       })
-      .catch((error) => {});
+      .catch(() => {});
   }
 
   private parseHotelResponse(item: any, id: number): void {
-    this.hotels.push({
+    this.hotels.push(<HotelType>{
       city: item[5][6],
       date: item[0],
       foodType: item[7][1],
       link: item[6][0],
-      price: `${Math.ceil(item[10]['total'])} ${item[10]['currency']}`,
+      price: `${Math.ceil(<number>item[10]['total'])} ${item[10]['currency']}`,
       photo: item[6][2],
       name: item[6][1],
       id,
