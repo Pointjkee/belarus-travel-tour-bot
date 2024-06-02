@@ -563,14 +563,14 @@ export class Network {
       url: `${this.url}/tariffsearch/getResult?accommodationId=${this.accommodationId}&after=${this.after}&before=${this.before}&cityId=${this.cityId}&countryId=${this.countryId}&nightsMin=${this.nightsMin}&nightsMax=${this.nightsMax}&currency=${this.currencyId}&priceMin=${this.priceMin}&priceMax=${this.priceMax}&hotelClassId=${this.hotelClassId}&hotelClassBetter=${this.hotelClassBetter}&rAndBId=${this.rAndBId}&rAndBBetter=${this.rAndBBetter}`,
     })
       .then((response: IResponse) => {
-        response.data.data.forEach((item: unknown, index: number) =>
+        response.data.data.forEach((item: any, index: number) =>
           this.parseHotelResponse(item, index),
         );
       })
       .catch(() => {});
   }
 
-  private parseHotelResponse(item: unknown, id: number): void {
+  private parseHotelResponse(item: any, id: number): void {
     this.hotels.push(<HotelType>{
       city: item[5][6],
       date: item[0],
@@ -598,7 +598,7 @@ export interface IResponse {
     serverName: string;
     departureCityId: number;
     arrivalCountryId: number;
-    data: unknown;
+    data: any;
   };
 }
 

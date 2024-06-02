@@ -25,6 +25,7 @@
         "ts-check": false,
         "minimumDescriptionLength": 3
       }
-    ]
+    ],
+    "@typescript-eslint/no-explicit-any": "warn"
   }
 }
