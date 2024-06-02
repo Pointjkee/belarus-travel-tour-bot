@@ -1,0 +1,27 @@
+name: learn-github-actions
+run-name: ${{ github.actor }} is learning GitHub Actions
+on:
+  push:
+    branches: [ develop, master ]
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+    #    with:
+     #     node-version: '20'
+     # - run: npm install
+      #- run: npm run build
+     # - run: npm run test
+
+      - name: Merge develop to master
+        if: success()  # Выполняется только если все предыдущие шаги были успешны
+        run: |
+          git config --global user.name 'pointjkee'
+          git config --global user.email '<>'
+          git fetch --unshallow
+          git checkout master
+          git pull
+          git merge --no-ff develop -m 'Auto-merge to master'
+          git push
