@@ -13,13 +13,12 @@ jobs:
           node-version: '20'
       - run: npm install
       - run: npm run build
-      - run: npm run test
+      - run: npm run testt
 
       - name: Merge develop to master
         if: success()  # Выполняется только если все предыдущие шаги были успешны
         run: |
           git config --global user.name 'pointjkee'
-          git config --global user.email 'your-email@example.com'
           git fetch origin master
           git checkout master
           git merge --allow-unrelated-histories origin/develop
