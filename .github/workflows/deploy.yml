@@ -21,7 +21,6 @@ jobs:
           git config --global user.name 'pointjkee'
           git config --global user.email "<>"
           git fetch origin master
-          git pull origin master
           git checkout master
           git add .
           git merge --allow-unrelated-histories origin/develop
