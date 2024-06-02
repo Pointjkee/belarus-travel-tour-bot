@@ -3,7 +3,7 @@ import { HotelType } from '../network/network';
 import { IDatabase, Tables } from './database.types';
 
 export class Database {
-  public supabase: any;
+  public supabase: unknown;
 
   constructor() {
     this.connect();
