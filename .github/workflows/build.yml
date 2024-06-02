@@ -12,6 +12,7 @@ jobs:
           node-version: '20'
       - run: npm install
       - run: npm run build
+      - run: git checkout -- package-lock.json
       - run: npm run lint
 
         if: success()  # Выполняется только если все предыдущие шаги были успешны
