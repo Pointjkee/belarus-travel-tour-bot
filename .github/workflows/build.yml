@@ -26,8 +26,3 @@ jobs:
           git pull
           git merge --no-ff develop -m 'Auto-merge to master'
           git push
-      - name: Invoke deployment hook
-        uses: distributhor/workflow-webhook@v3
-        with:
-          webhook_url: ${{ secrets.WEBHOOK_URL }}
-          webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
