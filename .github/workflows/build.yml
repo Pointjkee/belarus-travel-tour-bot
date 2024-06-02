@@ -18,7 +18,7 @@ jobs:
       - name: Set Git config
         run: |
           git config --global user.name 'pointjkee'
-          git config --global user.email '<razoranet@gmail.com>'
+          git config --global user.email 'razoranet@gmail.com'
       - name: Merge develop to master
         run: |
           git fetch --unshallow
