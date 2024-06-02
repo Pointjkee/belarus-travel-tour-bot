@@ -20,11 +20,8 @@ jobs:
         run: |
           git config --global user.name 'pointjkee'
           git config --global user.email "<>"
-          git fetch origin master
+          git fetch --unshallow
           git checkout master
-          git add .
-          git merge --allow-unrelated-histories origin/develop
-          if [[ -n "$(git status --porcelain)" ]]; then
-            git commit -m "chore (automated): update"
-            git push origin main
-          fi
+          git pull
+          git merge --no-ff develop -m "Auto-merge to master
+          git push
