@@ -19,9 +19,9 @@ jobs:
         if: success()  # Выполняется только если все предыдущие шаги были успешны
         run: |
           git config --global user.name 'pointjkee'
-          git config --global user.email "<>"
+          git config --global user.email '<>'
           git fetch --unshallow
           git checkout master
           git pull
-          git merge --no-ff develop -m "Auto-merge to master
+          git merge --no-ff develop -m 'Auto-merge to master'
           git push
