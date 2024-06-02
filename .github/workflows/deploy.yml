@@ -19,7 +19,8 @@ jobs:
         if: success()  # Выполняется только если все предыдущие шаги были успешны
         run: |
           git config --global user.name 'pointjkee'
+          git config --global user.email 'your-email@example.com'
           git fetch origin master
           git checkout master
-          git merge --no-ff origin/develop
+          git merge --allow-unrelated-histories origin/develop
           git push origin master
