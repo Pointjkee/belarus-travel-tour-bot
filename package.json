@@ -4,7 +4,7 @@
   "description": "Telegram bot for searching tour",
   "main": "index.ts",
   "scripts": {
-    "start": "node ./dist/index.js",
+    "start": "NODE_ENV=production node ./dist/index.js",
     "build": "tsc",
     "nodemon": "nodemon --inspect src/index.ts",
     "watch": "tsc -w",
