@@ -1,10 +1,10 @@
 {
   "name": "telegram_bot",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Telegram bot for searching tour",
   "main": "index.ts",
   "scripts": {
-    "start": "NODE_ENV=production node ./dist/index.js",
+    "start": "node ./dist/index.js",
     "build": "tsc",
     "nodemon": "nodemon --inspect src/index.ts",
     "watch": "tsc -w",
